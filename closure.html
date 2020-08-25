@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id ='te'>ttt</button>
+    <script>
+
+        function fo() {
+            let el = document.getElementById('te')
+            el.onclick=function() {
+                console.log(el.id)
+            }
+            el = null
+        }
+        fo()
+    </script>
+
+</body>
+</html>
