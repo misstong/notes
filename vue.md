@@ -42,6 +42,3 @@ v-on缩写为@
 通过sequelize迁移管理数据库
 
 模型类以及controller中业务处理逻辑
-
-
-

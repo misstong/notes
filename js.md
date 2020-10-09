@@ -43,3 +43,12 @@ changedTouches： 触发当前手指列表
 
 另一种跨页面点击穿透问题：这次没有mask了，直接点击页内按钮跳转至新页，然后发现新页面中对应位置元素的click事件被触发了
 
+## 拖拽
+
+mouse事件模拟drag，同时加上阈值，超过阈值开始drag
+
+1， 注册mouse事件，mousedown,mousemove,mouseup
+2, mousedown事件记录鼠标和元素位置，标记mousedown,防止mousemove在mouse没down时触发
+3， mousemove首先判断鼠标down没，down了，再判断当前位置与元素鼠标位置是否超过阈值，没超过什么都不做，超过了分为start和move两阶段，通过isDrag标记识别，isDrag为否说明刚开始触发dragstart事件，否则触发dragmove事件
+整个过程：
+mousedown-----阈值范围-----start--drag
