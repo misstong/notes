@@ -13,7 +13,7 @@ const startTagClose = /^\s*(\/?)>/
 const endTag = /^<\/[^>]*>/
 
 const stack = []
-let root;
+let root, currentParent;
 function parseStartTag(html) {
     const match = html.match(startTagOpen)
     if(match) {
@@ -43,9 +43,36 @@ function parseStartTag(html) {
 function advance(html, n) {
     return html.substring(n)
 }
+function isUnaryTag(tag){
+    return false// temp for now 
+}
 
-function parseHtml(template) {
-    console.log(template)
+function handleStartTag(startMatch, options) {
+    const tag = startMatch.tag
+    const l = startMatch.attrs.length
+    const attrs = new Array(l)
+    for (let i = 0;i<l;i++){
+        const attr = attrs[i]
+        const value = attr[3] || attr[4] || ''
+        attrs[i] = {
+            name: attr[1],
+            value
+        }
+    }
+    const unary = !!startMatch.unarySlash // isUnaryTag()
+    if (!unary) {
+        stack.push({tag, attrs})
+    }
+
+    if (options&& options.start) {
+        options.start(tag,attrs,unary)
+    }
+
+}
+
+
+function parseHtml(template, options) {
+    // console.log(template)
     let html = template
     while(html) {
         let textEnd = html.indexOf('<') 
@@ -53,20 +80,20 @@ function parseHtml(template) {
              //匹配标签头
             const startMatch = parseStartTag(html)
             if (startMatch){
-                // createTree
-                if(stack.length) {
-                    stack[stack.length-1].children.push(startMatch)
-                    startMatch.parent = stack[stack.length-1]
-                }
+                // // createTree
+                // if(stack.length) {
+                //     stack[stack.length-1].children.push(startMatch)
+                //     startMatch.parent = stack[stack.length-1]
+                // }
 
-                //匹配上开头标签，如果当前标签不是单标签，当前parent即为当前匹配元素
-                if(!startMatch.unarySlash) {
-                    stack.push(startMatch)
-                    if(!root) {
-                        root = startMatch
-                    }
-                }
-                
+                // //匹配上开头标签，如果当前标签不是单标签，当前parent即为当前匹配元素
+                // if(!startMatch.unarySlash) {
+                //     stack.push(startMatch)
+                //     if(!root) {
+                //         root = startMatch
+                //     }
+                // }
+                handleStartTag(startMatch, options)
                 
 
                 //截取html，向前匹配
@@ -90,9 +117,20 @@ function parseHtml(template) {
        
 
     }
-    console.log(root)
+    // console.log(root)
 }
 
+//parseHtml定义了解析的主流程，通过钩子函数调用来创建虚拟dom树，运用的是模板方法
+function parse(template) {
+    let root, currentParent;
+
+    parseHtml(template, {
+        start(tag, attrs, unary) {
+            const ele = createASTElement(tag, attrs, unary)
+        }
+    })
+    return root
+}
 
 
 parseHtml(`<head>
