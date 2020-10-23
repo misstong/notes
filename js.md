@@ -52,3 +52,30 @@ mouse事件模拟drag，同时加上阈值，超过阈值开始drag
 3， mousemove首先判断鼠标down没，down了，再判断当前位置与元素鼠标位置是否超过阈值，没超过什么都不做，超过了分为start和move两阶段，通过isDrag标记识别，isDrag为否说明刚开始触发dragstart事件，否则触发dragmove事件
 整个过程：
 mousedown-----阈值范围-----start--drag
+
+
+
+## 横竖屏
+
+window.addEventListener('orientationChange',)
+
+## 加速度
+
+window.addEventListener('devicemotion')
+
+devicemotion事件包含accelaration对象，包括了x,y,z
+
+## 重力加速度
+
+event.accelerationIncludingGravity重力加速度（重力+加速度）
+
+## ios加速度检测授权12.2
+
+先设timer提醒授权，注册devicemotion事件，如果有取消一次timer，
+正常注册devicemotion监听事件
+
+## ios事件注册需要获取授权 13
+
+DeviceMotionEvent.requestPermission
+
+## ios13.3后获取授权必须注册touch事件
