@@ -79,3 +79,7 @@ event.accelerationIncludingGravity重力加速度（重力+加速度）
 DeviceMotionEvent.requestPermission
 
 ## ios13.3后获取授权必须注册touch事件
+
+
+## 编译js包中的C++模块
+node-gyp

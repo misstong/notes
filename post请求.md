@@ -1,6 +1,8 @@
 ## post请求提交方式
 参考：https://blog.csdn.net/bigtree_3721/article/details/82809459
 
+https://blog.csdn.net/wangjun5159/article/details/47781443
+
 ### application/x-www-form-urlencoded
 ```
 POST http://www.example.com HTTP/1.1
