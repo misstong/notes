@@ -61,6 +61,18 @@ render(
 
 - createStore
 
+```javascript
+// {...state,{pageForm:{[key]: value}}}
+
+update(this.state, {
+    pageForm: {
+        [key]: {
+            $set: value
+        }
+    }
+})
+```
+
 
 ## dva
 dva = React-Router + Redux + Redux-saga
